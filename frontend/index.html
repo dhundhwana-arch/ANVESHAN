@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANVESHAN — Advanced Scientific Research & Discovery Platform</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">A</div>
+      <div>
+        <h1>ANVESHAN</h1>
+        <div class="subtitle">Advanced Scientific Research &amp; Discovery Platform &middot; Founder &amp; Developer: DIVYESH BAMBHANIYA</div>
+      </div>
+    </div>
+    <div class="status-pills" id="statusPills">
+      <span class="pill" id="backendPill">Backend: Connecting...</span>
+      <span class="pill" id="aiPill">AI Provider: Checking...</span>
+    </div>
+  </header>
+
+  <nav class="main-nav" role="tablist" aria-label="Primary Navigation">
+    <button class="nav-btn active" data-section="overview" role="tab">Overview</button>
+    <button class="nav-btn" data-section="math" role="tab">Mathematical Lab</button>
+    <button class="nav-btn" data-section="physics" role="tab">Physics Lab</button>
+    <button class="nav-btn" data-section="hypothesis" role="tab">Hypothesis Lab</button>
+    <button class="nav-btn" data-section="data" role="tab">Data Analysis</button>
+    <button class="nav-btn" data-section="ledger" role="tab">Experiment Ledger</button>
+    <button class="nav-btn" data-section="literature" role="tab">Literature Explorer</button>
+    <button class="nav-btn" data-section="ai" role="tab">AI Synthesis</button>
+    <button class="nav-btn" data-section="docs" role="tab">Documentation</button>
+  </nav>
+
+  <main class="layout">
+    <!-- SECTION 1: OVERVIEW + EXPLORE LIVE DEMOS -->
+    <section id="sec-overview" class="section-panel active">
+      <div class="hero-grid">
+        <div class="card">
+          <h2>
+            Research Command Center
+            <span class="badge saffron">REAL FASTAPI + SQLITE BACKEND</span>
+          </h2>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);">
+            Every demonstration below calls the live Python FastAPI backend (SymPy, NumPy, SciPy, Pandas, SQLite). Zero hardcoded scientific results, zero fabricated papers, and explicit separation of computational outputs from hypotheses.
+          </p>
+          <div class="metrics-grid">
+            <div class="metric-box"><div class="metric-label">Experiments</div><div class="metric-value" id="metricExperiments">--</div></div>
+            <div class="metric-box"><div class="metric-label">Hypotheses</div><div class="metric-value" id="metricHypotheses">--</div></div>
+            <div class="metric-box"><div class="metric-label">Verifications</div><div class="metric-value" id="metricVerifications">--</div></div>
+            <div class="metric-box"><div class="metric-label">Datasets</div><div class="metric-value" id="metricDatasets">--</div></div>
+            <div class="metric-box"><div class="metric-label">Saved Sources</div><div class="metric-value" id="metricSources">--</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>3D Intelligence Core <span class="badge" id="runtimeBadge">Python / SciPy</span></h2>
+          <canvas id="coreCanvas" aria-label="Interactive 3D Intelligence Core visualization"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Explore Live Demos <span class="badge ok">8 REAL WORKFLOWS</span></h2>
+        <div class="demo-grid">
+          <article class="demo-card">
+            <h3>1. Mathematical Engine</h3>
+            <p>Safe SymPy symbolic calculus &amp; algebra, NumPy/SciPy statistical testing, OLS regression, and seeded Monte Carlo &pi; estimation.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Verifiable analytical derivations and statistical inference with correlation-vs-causation warnings.<br/><strong>Limits:</strong> 300-char expression limit; univariate OLS.</div>
+            <button class="btn-primary try-demo-btn" data-target="math">Try Live Demo</button>
+          </article>
+          <article class="demo-card">
+            <h3>2. Physics Simulation Engine</h3>
+            <p>Five deterministic SciPy RK45 ODE models (Oscillator, Projectile w/ Air Drag, Radioactive Decay, Thermal Cooling, Logistic Growth) verified against analytical solutions.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Quantitative comparison of numerical solvers against exact closed-form physics.<br/><strong>Limits:</strong> Classical deterministic ODEs; units tracked via metadata.</div>
+            <button class="btn-primary try-demo-btn" data-target="physics">Try Live Demo</button>
+          </article>
+          <article class="demo-card">
+            <h3>3. Hypothesis Verification</h3>
+            <p>Define explicit assumptions, falsifiable predictions, and numeric acceptance criteria; execute real computational tests.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Transparent falsification preserving both supported and failed runs.<br/><strong>Limits:</strong> Computational support is not universal physical proof.</div>
+            <button class="btn-primary try-demo-btn" data-target="hypothesis">Try Live Demo</button>
+          </article>
+          <article class="demo-card">
+            <h3>4. CSV Data Analysis</h3>
+            <p>Upload a CSV file (or load clearly labeled sample data) for Pandas descriptive stats, missing-value counts, Pearson correlation, and OLS regression.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Rapid reproducible tabular auditing with SHA-256 dataset checksums.<br/><strong>Limits:</strong> 2 MB file cap; correlation does not imply causation.</div>
+            <button class="btn-primary try-demo-btn" data-target="data">Try Live Demo</button>
+          </article>
+          <article class="demo-card">
+            <h3>5. Experiment Ledger</h3>
+            <p>Append-only SQLite ledger with immutability triggers, SHA-256 parameter checksums, and deterministic reruns.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Auditability and exact computational reproducibility across runs.<br/><strong>Limits:</strong> SQLite triggers prevent SQL mutation, not OS-level file edits.</div>
+            <button class="btn-primary try-demo-btn" data-target="ledger">Try Live Demo</button>
+          </article>
+          <article class="demo-card">
+            <h3>6. Scientific Literature</h3>
+            <p>Real HTTP clients for OpenAlex, arXiv (Atom XML), and PubChem PUG-REST with respectful rate-limit guards.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Verifiable metadata &amp; source URL tracking without fabricated citations.<br/><strong>Limits:</strong> Requires outbound internet; displays NOT_CONNECTED if offline.</div>
+            <button class="btn-primary try-demo-btn" data-target="literature">Try Live Demo</button>
+          </article>
+          <article class="demo-card">
+            <h3>7. Evidence Export</h3>
+            <p>Download genuine Markdown Experiment Evidence Reports and BibTeX citation files directly from persisted SQLite records.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Reproducible sharing of parameters, checksums, and literature references.<br/><strong>Limits:</strong> Exports only real persisted records.</div>
+            <button class="btn-primary try-demo-btn" data-target="ledger">Try Live Demo</button>
+          </article>
+          <article class="demo-card">
+            <h3>8. AI Synthesis (Optional)</h3>
+            <p>Replaceable Google Gemini REST adapter via server-side GEMINI_API_KEY environment variable.</p>
+            <div class="demo-meta"><strong>Solves:</strong> Hypothesis ideation while keeping core math &amp; physics 100% key-free.<br/><strong>Limits:</strong> Displays NOT_CONFIGURED when key is unset; never fakes AI output.</div>
+            <button class="btn-primary try-demo-btn" data-target="ai">Try Live Demo</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: MATHEMATICAL LAB -->
+    <section id="sec-math" class="section-panel card">
+      <h2>Mathematical Lab <span class="badge">SYMPY + NUMPY + SCIPY</span></h2>
+      <div class="subtabs">
+        <button class="subtab-btn active" data-sub="math-sym">Symbolic Calculus &amp; Solve</button>
+        <button class="subtab-btn" data-sub="math-stats">Statistical Analysis &amp; OLS</button>
+        <button class="subtab-btn" data-sub="math-mc">Monte Carlo &pi; Estimation</button>
+      </div>
+
+      <div id="sub-math-sym" class="subpanel active">
+        <div class="form-grid">
+          <label>Expression<input id="mathExpr" value="sin(x)^2 + cos(x)^2 + x^3 - 3*x" /></label>
+          <label>Operation
+            <select id="mathOp">
+              <option value="differentiate">Differentiate</option>
+              <option value="integrate">Integrate</option>
+              <option value="solve">Solve (= 0)</option>
+              <option value="simplify">Simplify</option>
+              <option value="expand">Expand</option>
+              <option value="factor">Factor</option>
+            </select>
+          </label>
+          <label>Variable<input id="mathVar" value="x" /></label>
+          <label>Evaluate At (optional)<input id="mathEval" type="number" step="any" placeholder="e.g. 2.0" /></label>
+        </div>
+        <button class="btn-primary" id="runMathBtn">Run Experiment (SymPy)</button>
+        <canvas id="mathCanvas" class="plot-canvas"></canvas>
+        <div class="explain-box" id="mathExplain">Runs SymPy inside a restricted parser sandbox (blocking code injection) and plots the input curve (cyan) vs result curve (saffron).</div>
+        <div class="limit-note">Limitations: Max 300 characters; whitelisted standard real symbols (x, y, z, t, n, k, a, b, c) and elementary functions.</div>
+        <pre class="output-box" id="mathOutput">Click "Run Experiment (SymPy)" to execute POST /api/math/symbolic.</pre>
+      </div>
+
+      <div id="sub-math-stats" class="subpanel">
+        <div class="form-grid">
+          <label>X Values (comma-separated, sample data)<input id="statsX" value="1, 2, 3, 4, 5, 6" /></label>
+          <label>Y Values (optional, for OLS regression)<input id="statsY" value="2.8, 5.1, 7.2, 8.9, 11.1, 13.0" /></label>
+          <label>Hypothesized Mean (optional t-test)<input id="statsMean" type="number" step="any" value="3.5" /></label>
+        </div>
+        <button class="btn-primary" id="runStatsBtn">Run Experiment (Statistics &amp; OLS)</button>
+        <canvas id="statsCanvas" class="plot-canvas"></canvas>
+        <div class="explain-box" id="statsExplain">Computes descriptive stats, Shapiro-Wilk normality, one-sample t-test, and SciPy OLS regression with explicit correlation-vs-causation warning.</div>
+        <pre class="output-box" id="statsOutput">Click "Run Experiment (Statistics &amp; OLS)" to execute POST /api/math/statistics.</pre>
+      </div>
+
+      <div id="sub-math-mc" class="subpanel">
+        <div class="form-grid">
+          <label>Sample Count (100 - 500,000)<input id="mcSamples" type="number" value="25000" min="100" max="500000" /></label>
+          <label>Deterministic Seed<input id="mcSeed" type="number" value="42" /></label>
+        </div>
+        <button class="btn-primary" id="runMcBtn">Run Experiment (Monte Carlo &pi;)</button>
+        <div class="explain-box" id="mcExplain">Uses NumPy default_rng(seed) for deterministic quadrant sampling; rerunning with the same seed reproduces the exact estimate.</div>
+        <pre class="output-box" id="mcOutput">Click "Run Experiment (Monte Carlo &pi;)" to execute POST /api/math/monte-carlo-pi.</pre>
+      </div>
+    </section>
+
+    <!-- SECTION 3: PHYSICS LAB (ALL 5 MODELS) -->
+    <section id="sec-physics" class="section-panel card">
+      <h2>Physics Lab <span class="badge">5 SCIPY RK45 ODE MODELS</span></h2>
+      <div class="subtabs">
+        <button class="subtab-btn active" data-sub="phys-osc">Damped Oscillator</button>
+        <button class="subtab-btn" data-sub="phys-proj">Projectile + Air Drag</button>
+        <button class="subtab-btn" data-sub="phys-decay">Radioactive Decay</button>
+        <button class="subtab-btn" data-sub="phys-cool">Thermal Cooling</button>
+        <button class="subtab-btn" data-sub="phys-log">Logistic Growth</button>
+      </div>
+
+      <div id="sub-phys-osc" class="subpanel active">
+        <div class="form-grid">
+          <label>Mass m (kg)<input id="oscMass" type="number" step="0.1" value="1.0" /></label>
+          <label>Damping c (N&middot;s/m)<input id="oscDamping" type="number" step="0.1" value="0.4" /></label>
+          <label>Stiffness k (N/m)<input id="oscStiffness" type="number" step="0.5" value="4.0" /></label>
+          <label>Initial x0 (m)<input id="oscX0" type="number" step="0.1" value="1.0" /></label>
+          <label>Duration (s)<input id="oscDur" type="number" step="1" value="12.0" /></label>
+        </div>
+        <button class="btn-primary" id="runOscBtn">Run Experiment (Oscillator)</button>
+      </div>
+
+      <div id="sub-phys-proj" class="subpanel">
+        <div class="form-grid">
+          <label>Initial Speed v0 (m/s)<input id="projV0" type="number" step="1" value="40.0" /></label>
+          <label>Launch Angle (deg)<input id="projAngle" type="number" step="1" value="45.0" /></label>
+          <label>Mass (kg)<input id="projMass" type="number" step="0.01" value="0.145" /></label>
+          <label>Drag Coeff Cd<input id="projCd" type="number" step="0.05" value="0.47" /></label>
+        </div>
+        <button class="btn-primary" id="runProjBtn">Run Experiment (Projectile)</button>
+      </div>
+
+      <div id="sub-phys-decay" class="subpanel">
+        <div class="form-grid">
+          <label>Initial Nuclei N0<input id="decN0" type="number" value="1000" /></label>
+          <label>Half-Life t1/2 (s)<input id="decHalf" type="number" step="0.5" value="10.0" /></label>
+          <label>Duration (s)<input id="decDur" type="number" step="1" value="50.0" /></label>
+        </div>
+        <button class="btn-primary" id="runDecayBtn">Run Experiment (Radioactive Decay)</button>
+      </div>
+
+      <div id="sub-phys-cool" class="subpanel">
+        <div class="form-grid">
+          <label>Initial Temp T0 (&deg;C)<input id="coolT0" type="number" step="1" value="90.0" /></label>
+          <label>Ambient Temp Tenv (&deg;C)<input id="coolTenv" type="number" step="1" value="22.0" /></label>
+          <label>Cooling Constant k (1/s)<input id="coolK" type="number" step="0.01" value="0.05" /></label>
+          <label>Duration (s)<input id="coolDur" type="number" step="5" value="120.0" /></label>
+        </div>
+        <button class="btn-primary" id="runCoolBtn">Run Experiment (Thermal Cooling)</button>
+      </div>
+
+      <div id="sub-phys-log" class="subpanel">
+        <div class="form-grid">
+          <label>Initial Pop P0<input id="logP0" type="number" step="1" value="10.0" /></label>
+          <label>Carrying Capacity K<input id="logK" type="number" step="10" value="1000.0" /></label>
+          <label>Growth Rate r<input id="logR" type="number" step="0.05" value="0.25" /></label>
+          <label>Duration t<input id="logDur" type="number" step="1" value="40.0" /></label>
+        </div>
+        <button class="btn-primary" id="runLogBtn">Run Experiment (Logistic Growth)</button>
+      </div>
+
+      <canvas id="physicsCanvas" class="plot-canvas"></canvas>
+      <div class="explain-box" id="physicsExplain">Cyan curve: SciPy RK45 numerical trajectory. Saffron curve: closed-form analytical reference (where applicable).</div>
+      <div class="limit-note">Assumptions: Deterministic classical ODEs with constant physical parameters; RK45 tolerances rtol=1e-8/1e-9.</div>
+      <pre class="output-box" id="physicsOutput">Select any of the 5 physics models above and click "Run Experiment".</pre>
+    </section>
+
+    <!-- SECTION 4: HYPOTHESIS LAB -->
+    <section id="sec-hypothesis" class="section-panel card">
+      <h2>Hypothesis Testing &amp; Falsification Chamber</h2>
+      <div class="form-grid">
+        <label>Hypothesis Title<input id="hypTitle" value="RK45 Oscillator Accuracy Bound" /></label>
+        <label>Test Domain
+          <select id="hypDomain">
+            <option value="physics_oscillator">physics_oscillator</option>
+            <option value="physics_projectile">physics_projectile</option>
+            <option value="physics_decay">physics_decay</option>
+            <option value="physics_cooling">physics_cooling</option>
+            <option value="physics_logistic">physics_logistic</option>
+            <option value="monte_carlo_pi">monte_carlo_pi</option>
+          </select>
+        </label>
+        <label>Metric Path<input id="hypMetric" value="numerical_verification.max_abs_error_vs_analytical_m" /></label>
+        <label>Operator
+          <select id="hypOp">
+            <option value="<=">&lt;=</option>
+            <option value="<">&lt;</option>
+            <option value=">=">&gt;=</option>
+            <option value=">">&gt;</option>
+            <option value="approx">approx</option>
+          </select>
+        </label>
+        <label>Target Threshold<input id="hypTarget" type="number" step="any" value="0.0001" /></label>
+      </div>
+      <div class="form-grid">
+        <label>Statement<input id="hypStatement" value="RK45 integration error for an underdamped oscillator stays below 1e-4 meters." /></label>
+        <label>Assumptions (comma-separated)<input id="hypAssumptions" value="Linear viscous damping, Constant mass and stiffness, IEEE-754 float64" /></label>
+        <label>Falsifiable Prediction<input id="hypPrediction" value="max_abs_error_vs_analytical_m <= 1e-4 for m=1, c=0.4, k=4, t=12s." /></label>
+      </div>
+      <button class="btn-primary" id="createAndVerifyHypBtn">Run Experiment (Create &amp; Verify Hypothesis)</button>
+      <div class="explain-box" id="hypExplain">Executes the chosen backend engine, evaluates the exact numeric criterion, and records SUPPORTED_BY_COMPUTATION or FALSIFIED_BY_COMPUTATION.</div>
+      <div class="limit-note">Scientific Integrity: Computational support validates numerical consistency under stated assumptions; it never proves a law universally.</div>
+      <pre class="output-box" id="hypOutput">Click "Run Experiment" to create and computationally test your hypothesis.</pre>
+    </section>
+
+    <!-- SECTION 5: DATA ANALYSIS (CSV) -->
+    <section id="sec-data" class="section-panel card">
+      <h2>CSV Data Analysis Workbench <span class="badge">PANDAS + SCIPY + SHA-256</span></h2>
+      <div class="form-grid">
+        <label>Upload Real CSV File (max 2 MB)<input id="csvFile" type="file" accept=".csv,text/csv" /></label>
+        <label>Regression X Column (optional)<input id="csvXCol" value="temp_c" /></label>
+        <label>Regression Y Column (optional)<input id="csvYCol" value="rate" /></label>
+      </div>
+      <label style="margin-bottom:10px;">CSV Data <span style="color:var(--accent-saffron)">(Pre-filled with clearly labeled Sample Dataset — upload your own CSV anytime)</span>
+        <textarea id="csvText" rows="5">temp_c,rate
+20,1.2
+30,2.4
+40,3.5
+50,4.9
+60,6.1</textarea>
+      </label>
+      <button class="btn-primary" id="runCsvBtn">Run Experiment (Analyze CSV)</button>
+      <canvas id="csvCanvas" class="plot-canvas"></canvas>
+      <div class="explain-box" id="csvExplain">Computes SHA-256 file checksum, missing values, descriptive statistics, Pearson correlation matrix, and OLS regression line (saffron) vs observed points (cyan).</div>
+      <pre class="output-box" id="csvOutput">Click "Run Experiment (Analyze CSV)" to execute POST /api/datasets/analyze.</pre>
+    </section>
+
+    <!-- SECTION 6: EXPERIMENT LEDGER & EVIDENCE EXPORT -->
+    <section id="sec-ledger" class="section-panel card">
+      <h2>
+        Immutable Experiment Ledger &amp; Evidence Export
+        <button class="btn-secondary" id="refreshHistoryBtn">Refresh Ledger</button>
+      </h2>
+      <p style="font-size:0.84rem; color:var(--text-secondary);">Every experiment run is stored in SQLite with BEFORE UPDATE / BEFORE DELETE triggers, SHA-256 parameter checksums, rerun lineage, and downloadable Markdown evidence reports.</p>
+      <div class="history-list" id="historyList"></div>
+      <pre class="output-box" id="rerunOutput">Click "Rerun &amp; Verify" to test deterministic reproducibility, or "Download .md Report" to fetch GET /api/experiments/{id}/report.</pre>
+    </section>
+
+    <!-- SECTION 7: LITERATURE EXPLORER & BIBTEX -->
+    <section id="sec-literature" class="section-panel card">
+      <h2>Scientific Literature Explorer <span class="badge">OPENALEX &middot; ARXIV &middot; PUBCHEM</span></h2>
+      <div class="form-grid">
+        <label>Search Query<input id="litQuery" value="damped harmonic oscillator" /></label>
+        <label>Provider
+          <select id="litProvider">
+            <option value="openalex">OpenAlex (Works)</option>
+            <option value="arxiv">arXiv (Preprints)</option>
+            <option value="pubchem">PubChem (Compounds)</option>
+          </select>
+        </label>
+        <label>Limit<input id="litLimit" type="number" min="1" max="20" value="5" /></label>
+      </div>
+      <div class="btn-row">
+        <button class="btn-primary" id="runLitBtn">Run Live Search</button>
+        <button class="btn-secondary" id="exportBibBtn">Download BibTeX (.bib)</button>
+      </div>
+      <div class="explain-box">Queries official external APIs with rate-limit guards. If outbound network access is unavailable, returns honest NOT_CONNECTED status with zero fabricated citations.</div>
+      <pre class="output-box" id="litOutput">Click "Run Live Search" or "Download BibTeX (.bib)".</pre>
+    </section>
+
+    <!-- SECTION 8: AI SYNTHESIS -->
+    <section id="sec-ai" class="section-panel card">
+      <h2>AI Synthesis Adapter <span class="badge saffron">OPTIONAL &middot; GEMINI API</span></h2>
+      <div class="form-grid">
+        <label>Research Synthesis Prompt
+          <textarea id="aiPrompt" rows="3">Propose two falsifiable computational experiments to test numerical error scaling in stiff ODEs.</textarea>
+        </label>
+      </div>
+      <button class="btn-primary" id="runAiBtn">Invoke Configured AI Provider</button>
+      <div class="explain-box">Calls Google Gemini API only when GEMINI_API_KEY is configured in server environment variables. Otherwise displays honest NOT_CONFIGURED status. All core scientific engines work without an AI key.</div>
+      <pre class="output-box" id="aiOutput">Click "Invoke Configured AI Provider" to call POST /api/ai/analyze.</pre>
+    </section>
+
+    <!-- SECTION 9: DOCUMENTATION -->
+    <section id="sec-docs" class="section-panel card">
+      <h2>Platform Documentation &amp; API Reference</h2>
+      <h3>Verified REST API Endpoints</h3>
+      <pre class="output-box">GET  /api/system/status              - Live SQLite counts, runtime versions, AI status
+POST /api/math/symbolic              - SymPy symbolic simplify/diff/integrate/solve/expand/factor
+POST /api/math/statistics            - NumPy/SciPy stats, Shapiro-Wilk, t-test, OLS regression
+POST /api/math/monte-carlo-pi        - Seeded deterministic Monte Carlo Pi estimation
+POST /api/physics/oscillator         - Damped Harmonic Oscillator (RK45 vs analytical)
+POST /api/physics/projectile         - 2D Projectile Motion with Quadratic Air Drag
+POST /api/physics/decay              - First-Order Radioactive Decay
+POST /api/physics/cooling            - Newton's Law of Thermal Cooling
+POST /api/physics/logistic           - Logistic Population Growth
+POST /api/datasets/analyze           - Pandas CSV stats, SHA-256, Pearson corr, OLS
+POST /api/hypotheses                 - Create falsifiable hypothesis with acceptance criteria
+POST /api/hypotheses/{id}/verify     - Execute real computational verification test
+GET  /api/experiments                - List immutable SQLite experiment ledger
+POST /api/experiments/{id}/rerun     - Re-execute and verify deterministic reproducibility
+GET  /api/experiments/{id}/report    - Download Markdown Experiment Evidence Report
+POST /api/literature/search          - OpenAlex, arXiv, PubChem live search
+GET  /api/literature/export/bibtex   - Download BibTeX citations from saved sources
+POST /api/ai/analyze                 - Optional Gemini API synthesis (key-protected)</pre>
+      <h3>Free Public Deployment (Render)</h3>
+      <p style="font-size:0.86rem; color:var(--text-secondary);">
+        Repository includes <code>render.yaml</code> configured for Render's free web service tier (<code>plan: free</code>) and <code>Dockerfile</code>. Push branch <code>feat/anveshan-v1-core</code> to GitHub, connect the repository in Render Blueprints, and optionally set <code>GEMINI_API_KEY</code> in Render environment variables.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div>ANVESHAN &mdash; ADVANCED SCIENTIFIC RESEARCH &amp; DISCOVERY PLATFORM</div>
+    <div>Founder &amp; Developer: <strong>DIVYESH BAMBHANIYA</strong> &middot; Developer by Divyesh Bambhaniya</div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

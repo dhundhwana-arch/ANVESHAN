@@ -1,0 +1,43 @@
+# ANVESHAN v1.2 — Documentation & Implementation Consistency Audit
+
+**Project:** ANVESHAN — Advanced Scientific Research & Discovery Platform
+**Repository:** [https://github.com/dhundhwana-arch/ANVESHAN](https://github.com/dhundhwana-arch/ANVESHAN)
+**Audited Branch / Commit:** `feat/anveshan-v1-core` @ `b73c32c878177cb7c958da6236ad94a93d9e2cc3`
+**Audit Date:** 2026-11-19
+**Audit Mode:** Strictly read-only (zero source files, docs, or Git commits modified)
+
+## Classification Legend
+- **A. EXACTLY IMPLEMENTED**
+- **B. PARTIALLY IMPLEMENTED**
+- **C. IMPLEMENTED BUT NOT LIVE-VERIFIED**
+- **D. DOCUMENTATION CLAIM NOT SUPPORTED BY CODE**
+- **E. NOT IMPLEMENTED**
+
+---
+
+## Task-by-Task Audit Matrix
+
+| # | Specification Claim (README v1.2) | Actual Source File & Function | Test File & Test Name | Status | Discrepancy or Limitation |
+| --- | --- | --- | --- | --- | --- |
+| 1a | SymPy symbolic ops (`simplify`, `differentiate`, `integrate`, `solve`, `expand`, `factor`) + parser sandbox | `backend/engines/math_engine.py`: `safe_parse_expression`, `run_symbolic_operation` | `tests/test_math_engine.py`: `test_symbolic_differentiate_and_integrate`, `test_symbolic_security_injection_blocked` | **A. EXACTLY IMPLEMENTED** | Only `differentiate`, `integrate`, and injection guard are exercised in unit tests; `simplify`, `solve`, `expand`, `factor` exist in code but lack dedicated unit test assertions. |
+| 1b | NumPy/SciPy descriptive stats, Shapiro-Wilk normality, one-sample t-test, OLS regression (causation warning), seeded Monte Carlo Pi | `backend/engines/math_engine.py`: `run_statistical_analysis`, `run_monte_carlo_pi` | `tests/test_math_engine.py`: `test_statistics_and_regression_accuracy`, `test_monte_carlo_deterministic_seed` | **A. EXACTLY IMPLEMENTED** | Backend endpoints `/api/math/statistics` and `/api/math/monte-carlo-pi` exist, but are NOT wired into Frontend Tab 1 (see Task 8). |
+| 2 | Five physics ODE models vs analytical solutions (Oscillator, Projectile w/ drag, Decay, Thermal Cooling, Logistic Growth) | `backend/engines/physics_engine.py`: `simulate_damped_harmonic_oscillator`, `simulate_projectile_with_drag`, `simulate_radioactive_decay`, `simulate_thermal_cooling`, `simulate_logistic_growth` | `tests/test_physics_engine.py` (4 tests), `tests/test_export_engine.py` (`test_thermal_cooling_and_logistic_growth_accuracy`), `tests/test_api_e2e.py` | **A. EXACTLY IMPLEMENTED** | All 5 models and API routes work and pass independent analytical checks. Minor numerical note: projectile `max_height_m` uses discrete solver mesh max (`~6e-4` m error) rather than a `vy=0` apex event. Frontend Tab 2 only exposes Oscillator (see Task 8). |
+| 3 | SQLite immutable ledger (`BEFORE UPDATE`/`BEFORE DELETE` triggers), SHA-256 checksums, runtime versions, deterministic reruns | `backend/database.py`: `SCHEMA_SQL`, `compute_checksum`, `record_experiment`; `backend/engines/hypothesis_engine.py`: `rerun_experiment` | `tests/test_database.py`: `test_experiment_immutability_triggers`; `tests/test_hypothesis_engine.py`: `test_deterministic_rerun_reproducibility` | **A. EXACTLY IMPLEMENTED** | Stores `input_checksum` only (no `output_checksum`). SQLite triggers prevent SQL-level mutation, not OS-level file modification. |
+| 4 | Hypothesis assumptions, falsifiable predictions, acceptance criteria, `SUPPORTED_BY_COMPUTATION` & `FALSIFIED_BY_COMPUTATION` (`FAILED_EXPERIMENT`) | `backend/engines/hypothesis_engine.py`: `evaluate_criterion`, `verify_hypothesis`; `backend/database.py`: `create_hypothesis`, `record_verification_run` | `tests/test_hypothesis_engine.py`: `test_hypothesis_supported_and_falsified_paths`; `tests/test_api_e2e.py` | **A. EXACTLY IMPLEMENTED** | Operators `<, <=, >, >=, approx` all implemented. Frontend Tab 3 hardcodes operator `<=` and omits `physics_cooling`, `physics_logistic`, and `math_stats` from its domain dropdown. |
+| 5 | CSV parsing via Pandas (up to 2 MB), SHA-256 checksum, missing counts, descriptive stats, Pearson correlation, OLS regression | `backend/engines/dataset_engine.py`: `analyze_csv_dataset` (`MAX_CSV_BYTES = 2 * 1024 * 1024`); `backend/main.py`: `/api/datasets/analyze` | `tests/test_dataset_engine.py` (2 tests); `tests/test_api_e2e.py`: `test_v1_2_dataset_cooling_and_export_endpoints` | **B. PARTIALLY IMPLEMENTED** | All core math works, but: (1) for 1-row CSV, `std_sample` returns `0.0` instead of `None` (mathematically undefined for `ddof=1`); (2) duplicate rows are not flagged; (3) endpoint accepts JSON `csv_text` rather than `multipart/form-data` (frontend reads file client-side via `FileReader`). |
+| 6 | BibTeX citation export & downloadable Markdown Experiment Evidence Reports | `backend/engines/export_engine.py`: `export_literature_bibtex`, `generate_experiment_markdown_report`; `backend/main.py`: `/api/literature/export/bibtex`, `/api/experiments/{id}/report` | `tests/test_export_engine.py`: `test_bibtex_and_markdown_report_generation`; `tests/test_api_e2e.py` | **B. PARTIALLY IMPLEMENTED** | Both backend endpoints work. However: (1) BibTeX does not escape LaTeX special characters (`%`, `&`, `_`, `#`, `$`); (2) Markdown report endpoint is NOT wired to a button in Frontend Tab 5. |
+| 7 | OpenAlex, arXiv, PubChem HTTP clients (rate-limit guards, offline `NOT_CONNECTED`) & replaceable Gemini API adapter (`NOT_CONFIGURED`) | `backend/engines/literature_engine.py`: `search_literature`, parsers; `backend/engines/ai_provider.py`: `AIProvider`, `GeminiProvider` | `tests/test_literature_engine.py` (4 tests); `tests/test_ai_provider.py` (1 test) | **C. IMPLEMENTED BUT NOT LIVE-VERIFIED** | Real HTTP client code, rate-limit timers (3s arXiv, 200ms PubChem), and honest offline/missing-key fallbacks exist, but zero live outbound network requests were executed in the offline sandbox. |
+| 8 | Responsive Research Lab Web UI with 7 workspace tabs and Canvas plots | `frontend/index.html`, `frontend/styles.css`, `frontend/app.js` | `tests/test_api_e2e.py`: `test_frontend_served_with_brand_footer_and_security_headers` | **B. PARTIALLY IMPLEMENTED** | All 7 tabs exist in HTML and call real APIs, **but** Tab 1 ("Math & Statistics") only exposes Symbolic Math (not Statistics/Monte Carlo), Tab 2 ("Physics Simulations") only exposes Oscillator (not Projectile/Decay/Cooling/Logistic), Tab 5 lacks a Report export button, and no real browser/tablet UI test has been executed (`NOT VERIFIED` in browser). |
+| 9 | Linux/macOS and Android Termux installation instructions | `README.md`, `requirements.txt` | `NOT VERIFIED` (pip/network disabled in sandbox) | **C. IMPLEMENTED BUT NOT LIVE-VERIFIED** | Commands are standard and accurate in form, including the Termux `pkg install python-numpy python-scipy` note, but could not be live-tested via `pip install` in the offline sandbox. |
+| 10 | Dependency & application version consistency (`v1.2`) | `README.md`, `backend/__init__.py`, `backend/config.py`, `backend/main.py`, `backend/engines/literature_engine.py`, `docs/` | Inspected via automated version scan | **D. DOCUMENTATION CLAIM NOT SUPPORTED BY CODE** | **Confirmed mismatch:** `README.md` states `v1.2`, while `backend/__init__.py` (`__version__`), `backend/config.py` (`"anveshan"`), `backend/main.py` (`FastAPI(version=...)`) all still report `"1.0.0"`, `literature_engine.py` sends `User-Agent: ANVESHAN-Research-Lab/1.0`, and `docs/FINAL_IMPLEMENTATION_REPORT.md` / `docs/FINAL_REALITY_AND_INTEGRITY_AUDIT.md` still reference `v1.0`. |
+
+---
+
+## Final Recommendation for Public v1.2 README
+
+**Verdict: CONDITIONALLY ACCURATE — REQUIRES 3 SMALL CLARIFICATIONS BEFORE PUBLIC v1.2 RELEASE.**
+
+The supplied `README.md` is **substantially honest and accurate** regarding the backend scientific engines, SQLite ledger, hypothesis verification, and offline limitations (zero fake features are claimed). However, before publishing as an official public `v1.2` README, you should approve and apply three targeted fixes:
+1. **Align version strings:** Bump `"1.0.0"` to `"1.2.0"` in `backend/__init__.py`, `backend/config.py`, `backend/main.py`, and `backend/engines/literature_engine.py` (or note `API v1.0.0 / Release v1.2`).
+2. **Clarify UI vs. API scope:** Explicitly note in `README.md` that all 5 physics models, statistics, Monte Carlo, and Markdown reports are available via the REST API, while the v1.2 Web UI currently exposes Oscillator in Tab 2 and Symbolic Math in Tab 1 (or wire the remaining UI controls).
+3. **Note minor scientific/export edge cases:** Document that 1-row CSV `std_sample` and BibTeX LaTeX character escaping (`%`, `&`, `_`) are scheduled for hardening in the next patch.
